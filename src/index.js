@@ -1,13 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import App from './Routs/App';
 import reportWebVitals from './reportWebVitals';
+import 'bootstrap/dist/css/bootstrap.css';
+import LandingPage from './Component/LandingPage/LandingPage'
+import SignIn from './Component/SignIn/SignIn';
+import SignUp from './Component/SignUp/SignUp';
+import CreateProduct from './Component/CreateProduct/CreateProduct';
+import ProductList from './Component/ProductList/ProductList'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+
+const router = createBrowserRouter([
+
+  {
+    path: '/', element: <App />,
+    children: [
+      { path: '/SignUp', element: <SignUp /> },
+      { path: '/SignIn', element: <SignIn /> },
+      { path: '/CreateProduct', element: <CreateProduct /> },
+      { path: '/LandingPage', element: <LandingPage /> },
+      { path: '/ProductList', element: <ProductList /> },
+
+    ]
+  },
+])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+ <RouterProvider router={router} />
   </React.StrictMode>
 );
 

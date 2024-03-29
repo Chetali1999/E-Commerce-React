@@ -1,0 +1,32 @@
+.footer-div {
+    background-color: #f1f1f1;
+}
+
+.footer-div> div {
+    max-width: 1317px;
+    margin: 0 auto;
+}
+
+.landing-page-footer h6 {
+    margin-bottom: 26px;
+}
+
+.landing-page-footer {
+    border-bottom: 1px solid #cccccc;
+    padding: 25px 0;
+}
+
+.landing-page-footer ul {
+    padding-left: 0px;
+    list-style-type: none;
+
+}
+
+.landing-page-footer li {
+    margin-bottom: 14px;
+}
+
+.landing-page-footer a {
+    text-decoration: none;
+    color: #000000;
+}
