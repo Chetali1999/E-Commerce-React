@@ -3,7 +3,7 @@ const initRouter = express();
 
 //Users Routes
 const usersRoute = require('./src/router/userRouter');
-initRouter.use('/users', usersRoute);
+initRouter.use('/user', usersRoute);
 
 //product Routes
 const productRouter = require('./src/router/productRouter');
