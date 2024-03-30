@@ -8,4 +8,3 @@ router.get('/UserDetails/:userId', userController.UserDetails)
 
 module.exports = router;
 
-//this is commented code
