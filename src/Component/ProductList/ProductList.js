@@ -1,8 +1,23 @@
 import { Card, Button, Row, Col } from 'react-bootstrap';
 import { Star } from 'lucide-react'
 import './ProductList.css'
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import ProductDetail from '../ProductDetails/ProductDetails';
 
 const ProductList = () => {
+
+    const navigate = useNavigate()
+    const [productList, setProductList] = useState({
+        productName: 'Shirt',
+        Brand: 'Sisi',
+        price: 2000
+    })
+
+    const handleSelect = (product) => {
+        console.log(product)
+        navigate('/ProductDetails',{state:{type:'detailPage',data:product}})
+    }
 
     return (
 
@@ -56,7 +71,7 @@ const ProductList = () => {
                                 <label className='common-customCheckbox vertical-filters-label'>
                                     <input type="checkbox" className='me-1' />300 - 400
                                 </label>
-                            </li> 
+                            </li>
                             <li>
                                 <label className='common-customCheckbox vertical-filters-label'>
                                     <input type="checkbox" className='me-1' />400 - 500
@@ -110,7 +125,7 @@ const ProductList = () => {
                                 <Card.Text>Chanel</Card.Text>
                                 <Star /><Star /><Star /><Star /><Star />
                                 <Card.Text>8,000</Card.Text>
-                                <Button variant="primary" className='text-center'>Buy</Button>
+                                <Button variant="primary" onClick={()=>{handleSelect(productList)}} className='text-center'>Buy</Button>
                             </Card.Body>
                         </Card>
                     </div>

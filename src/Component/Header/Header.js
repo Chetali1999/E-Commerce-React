@@ -20,7 +20,7 @@ const Header = () => {
                 </a>
 
                 <ul class="nav col-12 col-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><Link to='/SignIn' class="nav-link px-2 link-secondary">Overview</Link></li>
+                    <li><Link to='/ProductDetails' class="nav-link px-2 link-secondary">Overview</Link></li>
                     <li><Link to='/CreateProduct' class="nav-link px-2 link-dark">Creact Product</Link></li>
                     <li><Link to='/SignUp' class="nav-link px-2 link-dark">Sign Up</Link></li>
                 </ul>
