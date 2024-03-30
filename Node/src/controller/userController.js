@@ -1,12 +1,3 @@
-
-// const asyncHandler = require('../utils/asyncHandler')
-// const BaseError = require('../utils/baseError')
-// const { response, generateToken } = require('../utils/utils')
-// const jwt = require('jsonwebtoken');
-
-// const dotenv = require('dotenv');
-// dotenv.config('./config.env');
-
 const User = require('../models/userModel')
 
 // user Sign Up page
