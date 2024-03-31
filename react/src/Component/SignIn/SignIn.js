@@ -8,6 +8,7 @@ const SignIn = () => {
 		email: '',
 		password: '',
 	});
+	const [responseError, setResponseError] = useState()
 
 
 	const twowayBind = (key, value) => {
@@ -23,7 +24,7 @@ const SignIn = () => {
 
 	const handleDataSubmit = (e) => {
 		e.preventDefault();
-		axios.post('http://localhost:8080/api/signIn', inputData).then(response => {
+		axios.post('http://localhost:8080/api/user/signIn', inputData).then(response => {
 			console.log(response, 'ressssssssssssssssssssssssssss')
 			if (response.status === 201) {
 				localStorage.setItem('userData', JSON.stringify(response.data))

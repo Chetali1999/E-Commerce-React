@@ -12,6 +12,7 @@ const SignUp = () => {
 		dob: '',
 		role: 'admin'
 	})
+	const [responseError, setResponseError] = useState()
 
 	// const[a,seta] = useState('chetali')
 
@@ -83,7 +84,7 @@ const SignUp = () => {
 		e.preventDefault();
 		console.log(data,'ddddddddddd')
 		// axios.post('https://reqres.in/api/register/users/signup', data)
-		axios.post(`http://localhost:8080/api/signUp`, data)
+		axios.post(`http://localhost:8080/api/user/signUp`, data)
 		
 			.then(response => {
 				if (response.status === 201) {
