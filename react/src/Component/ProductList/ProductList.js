@@ -1,10 +1,36 @@
 import { Card, Button, Row, Col } from 'react-bootstrap';
 import { Star } from 'lucide-react'
 import './ProductList.css'
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const ProductList = () => {
 
+    const [productList, setProductList] = useState([]);
+    const navigate = useNavigate();
+
+    const getAllProduct = () => {
+        axios.get(`http://localhost:8080/api/product/all`).then(response => {
+            if (response.status === 201) {
+                setProductList(response?.data.data);
+            }
+            else {
+                console.log('error')
+            }
+        })
+    }
+
+    useEffect(() => {
+        getAllProduct()
+    }, [])
+
+    const handleSelect = (product) => {
+        navigate('/ProductDetails',{state:{type:'ProductDetails',data:product}})
+    }
+
     return (
+       
 
         <>
             <Row className='w-100 p-3'>
@@ -56,7 +82,7 @@ const ProductList = () => {
                                 <label className='common-customCheckbox vertical-filters-label'>
                                     <input type="checkbox" className='me-1' />300 - 400
                                 </label>
-                            </li> 
+                            </li>
                             <li>
                                 <label className='common-customCheckbox vertical-filters-label'>
                                     <input type="checkbox" className='me-1' />400 - 500
@@ -73,46 +99,23 @@ const ProductList = () => {
 
                 <Col sm={9}>
                     <div className='d-flex'>
-                        <Card className='me-3 w-100'>
-                            <Card.Img variant="top" src="holder.js/100px180" />
-                            <Card.Body>
-                                <Card.Title>Top</Card.Title>
-                                <Card.Text>Chanel</Card.Text>
-                                <Star /><Star /><Star /><Star /><Star />
-                                <Card.Text>8,000</Card.Text>
-                                <Button variant="primary" className='text-center'>Buy</Button>
-                            </Card.Body>
-                        </Card>
-                        <Card className='me-3 w-100'>
-                            <Card.Img variant="top" src="holder.js/100px180" />
-                            <Card.Body>
-                                <Card.Title>Top</Card.Title>
-                                <Card.Text>Chanel</Card.Text>
-                                <Star /><Star /><Star /><Star /><Star />
-                                <Card.Text>8,000</Card.Text>
-                                <Button variant="primary" className='text-center'>Buy</Button>
-                            </Card.Body>
-                        </Card>
-                        <Card className='me-3 w-100'>
-                            <Card.Img variant="top" src="holder.js/100px180" />
-                            <Card.Body>
-                                <Card.Title>Top</Card.Title>
-                                <Card.Text>Chanel</Card.Text>
-                                <Star /><Star /><Star /><Star /><Star />
-                                <Card.Text>8,000</Card.Text>
-                                <Button variant="primary" className='text-center'>Buy</Button>
-                            </Card.Body>
-                        </Card>
-                        <Card className='w-100'>
-                            <Card.Img variant="top" src="holder.js/100px180" />
-                            <Card.Body>
-                                <Card.Title>Top</Card.Title>
-                                <Card.Text>Chanel</Card.Text>
-                                <Star /><Star /><Star /><Star /><Star />
-                                <Card.Text>8,000</Card.Text>
-                                <Button variant="primary" className='text-center'>Buy</Button>
-                            </Card.Body>
-                        </Card>
+                        {productList?.length > 0 &&
+                            productList?.map((item) =>
+                                <div className='me-3'>
+                                    <Card className='me-0 w-100 h-100 p-2'>
+                                        <>
+                                            <Card.Img variant="top" src={item.image} />
+                                            <Card.Body>
+                                                <Card.Title>{item?.productName}</Card.Title>
+                                                <Card.Text>{item?.brand}</Card.Text>
+                                                <Star /><Star /><Star /><Star /><Star />
+                                                <Card.Text>{item?.price}</Card.Text>
+                                            </Card.Body>
+                                        </>
+                                        <Button variant="primary" className='text-center' onClick={()=>{handleSelect(item._id)}}>Buy</Button>
+                                    </Card>
+                                </div>
+                            )}
                     </div>
                 </Col>
             </Row>
