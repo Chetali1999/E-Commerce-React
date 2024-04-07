@@ -8,7 +8,7 @@ const SignUp = () => {
 		userName: '',
 		email: '',
 		password: '',
-		// confirmPassword: '',
+		confirmPassword: '',
 		dob: '',
 		role: 'admin'
 	})
@@ -69,23 +69,23 @@ const SignUp = () => {
 
 	// };
 
-
 	const twowayBind = (key, value) => {
 		setData({
 			...data,
 			[key]: value
 		})
 	}
+
 	const resetForm = () => {
-		setData();
+		setData({});
 	}
 
 	const handleDataSubmit = (e) => {
 		e.preventDefault();
-		console.log(data,'ddddddddddd')
+		console.log(data, 'ddddddddddd')
 		// axios.post('https://reqres.in/api/register/users/signup', data)
 		axios.post(`http://localhost:8080/api/user/signUp`, data)
-		
+
 			.then(response => {
 				if (response.status === 201) {
 					localStorage.setItem('userData', JSON.stringify(response.data))
@@ -113,26 +113,26 @@ const SignUp = () => {
 								</div>
 								<div class="form-group mb-3">
 									<label class="control-label" for="signupName">Your name</label>
-									<input type="text" value={data?.userName} onChange={(e) => { twowayBind('userName', e.target.value) }} maxlength="50" class="form-control" />
+									<input type="text" value={data?.userName || ''} onChange={(e) => { twowayBind('userName', e.target.value) }} maxlength="50" class="form-control" />
 								</div>
 								<div class="form-group mb-3">
 									<label class="control-label" for="signupEmail">Email</label>
-									<input type="email" value={data?.email} onChange={(e) => { twowayBind('email', e.target.value) }} maxlength="50" class="form-control" />
+									<input type="email" value={data?.email || ''} onChange={(e) => { twowayBind('email', e.target.value) }} maxlength="50" class="form-control" />
 								</div>
 								<div class="form-group mb-3">
 									<label class="control-label" for="signupPassword">Password</label>
-									<input type="password" value={data?.password} onChange={(e) => { twowayBind('password', e.target.value) }} maxlength="25" class="form-control" placeholder="at least 6 characters" length="40" />
+									<input type="password" value={data?.password || ''} onChange={(e) => { twowayBind('password', e.target.value) }} maxlength="25" class="form-control" placeholder="at least 6 characters" length="40" />
 								</div>
 								<div class="form-group mb-3">
 									<label class="control-label" for="signupPasswordagain">Confirm Password</label>
-									<input type="password" value={data?.confirmPassword} onChange={(e) => { twowayBind('confirmPassword', e.target.value) }} maxlength="25" class="form-control" />
+									<input type="password" value={data?.confirmPassword || ''} onChange={(e) => { twowayBind('confirmPassword', e.target.value) }} maxlength="25" class="form-control" />
 								</div>
 								<div class="form-group mb-3">
 									<label class="control-label" for="DOB">DOB</label>
-									<input type="date" value={data?.dob} onChange={(e) => { twowayBind('dob', e.target.value) }} name="DOB" class="form-control" />
+									<input type="date" value={data?.dob || ''} onChange={(e) => { twowayBind('dob', e.target.value) }} name="DOB" class="form-control" />
 								</div>
 								<div class="form-group mb-3">
-									<label class="control-label" value={data?.role} onChange={(e) => { twowayBind('role', e.target.value) }} for="role">Role</label>
+									<label class="control-label" value={data?.role || ''} onChange={(e) => { twowayBind('role', e.target.value) }} for="role">Role</label>
 									<select name="role" class="form-control">
 										<option value="admin">Admin</option>
 										<option value="user">User</option>
@@ -144,7 +144,6 @@ const SignUp = () => {
 								<p class="form-group">By creating an account, you agree to our <a href="#">Terms of Use</a> and our <a href="#">Privacy Policy</a>.</p>
 								<hr />
 								<p className='text-center'>Already have an account? <a href="#">Sign in</a></p>
-
 							</form>
 						</div>
 					</div>
