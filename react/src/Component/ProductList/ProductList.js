@@ -8,12 +8,16 @@ import axios from 'axios';
 const ProductList = () => {
 
     const [productList, setProductList] = useState([]);
+    const [filteredProductList, setFilteredProductList] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState(null);
+
     const navigate = useNavigate();
 
     const getAllProduct = () => {
         axios.get(`http://localhost:8080/api/product/all`).then(response => {
             if (response.status === 201) {
                 setProductList(response?.data.data);
+                setFilteredProductList(response.data.data);
             }
             else {
                 console.log('error')
@@ -25,52 +29,116 @@ const ProductList = () => {
         getAllProduct()
     }, [])
 
+    const filterData = (catItem) => {
+
+        if (catItem === selectedCategory) {
+            setSelectedCategory(null);
+            setFilteredProductList(productList);
+        } else {
+            const result = productList.filter((curData) => {
+                return curData.productName === catItem;
+            })
+            setFilteredProductList(result);
+            setSelectedCategory(catItem);
+            console.log(result, 'rrrrr')
+        }
+        // setProductList(result)
+    }
+
+
     const handleSelect = (product) => {
-        navigate('/ProductDetails',{state:{type:'ProductDetails',data:product}})
+        navigate('/ProductDetails', { state: { type: 'ProductDetails', data: product } })
     }
 
     return (
-       
 
         <>
             <Row className='w-100 p-3'>
                 <Col sm={3}>
                     <div className='vertical-filters-filters categories-container'>
-                        <h5 className='class="vertical-filters-header"'>Cloth Name</h5>
+                        <h5 className='class="vertical-filters-header"'>Categories</h5>
                         <ul className='categories-list'>
                             <li>
                                 <label className='common-customCheckbox vertical-filters-label'>
-                                    <input type="checkbox" className='me-1' />Shirt
+                                    <input type="checkbox" className='me-1' name='saree'
+                                        onChange={() => filterData('Saree')}
+                                        checked={selectedCategory === 'Saree'}
+                                    />Saree
                                 </label>
                             </li>
                             <li>
                                 <label className='common-customCheckbox vertical-filters-label'>
-                                    <input type="checkbox" className='me-1' />Jeans
+                                    <input type="checkbox" className='me-1' onChange={() => filterData('Shirt')} checked={selectedCategory === 'Shirt'} />Shirt
                                 </label>
                             </li>
                             <li>
                                 <label className='common-customCheckbox vertical-filters-label'>
-                                    <input type="checkbox" className='me-1' />Dress
+                                    <input type="checkbox" className='me-1' name='floral dress' onChange={() => filterData('floral dress')} checked={selectedCategory === 'floral dress'} />floral dress
+                                </label>
+                            </li>
+                            <li>
+                                <label className='common-customCheckbox vertical-filters-label'>
+                                    <input type="checkbox" className='me-1' onChange={() => filterData('Ethinic Dress')} />Ethinic Dress
+                                </label>
+                            </li>
+                            <li>
+                                <label className='common-customCheckbox vertical-filters-label'>
+                                    <input type="checkbox" className='me-1' onChange={() => filterData('Kurta set')} />Kurta set
+                                </label>
+                            </li>
+                            <li>
+                                <label className='common-customCheckbox vertical-filters-label'>
+                                    <input type="checkbox" className='me-1' onChange={() => filterData('Earring')} />Earring
+                                </label>
+                            </li>
+                            <li>
+                                <label className='common-customCheckbox vertical-filters-label'>
+                                    <input type="checkbox" className='me-1' onChange={() => filterData('Lehenga coli')} />Lehenga coli
                                 </label>
                             </li>
                         </ul>
                     </div>
                     <div className='vertical-filters-filters categories-container'>
-                        <h5 className='class="vertical-filters-header"'>Brand Name</h5>
+                        <h5 className='class="vertical-filters-header"'>Brand</h5>
                         <ul className='categories-list'>
                             <li>
                                 <label className='common-customCheckbox vertical-filters-label'>
-                                    <input type="checkbox" className='me-1' />Biba
+                                    <input type="checkbox" className='me-1' />Kalini
                                 </label>
                             </li>
                             <li>
                                 <label className='common-customCheckbox vertical-filters-label'>
-                                    <input type="checkbox" className='me-1' />Nike
+                                    <input type="checkbox" className='me-1' />Mitera
                                 </label>
                             </li>
                             <li>
                                 <label className='common-customCheckbox vertical-filters-label'>
-                                    <input type="checkbox" className='me-1' />Armani
+                                    <input type="checkbox" className='me-1' />Anouk
+                                </label>
+                            </li>
+                            <li>
+                                <label className='common-customCheckbox vertical-filters-label'>
+                                    <input type="checkbox" className='me-1' />Sangria
+                                </label>
+                            </li>
+                            <li>
+                                <label className='common-customCheckbox vertical-filters-label'>
+                                    <input type="checkbox" className='me-1' />Manvaa
+                                </label>
+                            </li>
+                            <li>
+                                <label className='common-customCheckbox vertical-filters-label'>
+                                    <input type="checkbox" className='me-1' />Adiva
+                                </label>
+                            </li>
+                            <li>
+                                <label className='common-customCheckbox vertical-filters-label'>
+                                    <input type="checkbox" className='me-1' />Adiva
+                                </label>
+                            </li>
+                            <li>
+                                <label className='common-customCheckbox vertical-filters-label'>
+                                    <input type="checkbox" className='me-1' />Ananya
                                 </label>
                             </li>
                         </ul>
@@ -99,8 +167,9 @@ const ProductList = () => {
 
                 <Col sm={9}>
                     <div className='d-flex'>
-                        {productList?.length > 0 &&
-                            productList?.map((item) =>
+                        {
+                            filteredProductList?.length > 0 &&
+                            filteredProductList?.map((item) =>
                                 <div className='me-3'>
                                     <Card className='me-0 w-100 h-100 p-2'>
                                         <>
@@ -112,7 +181,7 @@ const ProductList = () => {
                                                 <Card.Text>{item?.price}</Card.Text>
                                             </Card.Body>
                                         </>
-                                        <Button variant="primary" className='text-center' onClick={()=>{handleSelect(item._id)}}>Buy</Button>
+                                        <Button variant="primary" className='text-center' onClick={() => { handleSelect(item._id) }}>Buy</Button>
                                     </Card>
                                 </div>
                             )}
