@@ -9,7 +9,7 @@ const ProductList = () => {
 
     const [productList, setProductList] = useState([]);
     const [filteredProductList, setFilteredProductList] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState([]);
 
     const navigate = useNavigate();
 
@@ -31,18 +31,28 @@ const ProductList = () => {
 
     const filterData = (catItem) => {
 
-        if (catItem === selectedCategory) {
-            setSelectedCategory(null);
+        let updatedCategories = [...selectedCategory];
+
+        if (updatedCategories.includes(catItem)) {
+            // Deselect the category
+            updatedCategories = updatedCategories.filter(item => item !== catItem);
+        } else {
+            // Select the category
+            updatedCategories.push(catItem);
+        }
+
+        setSelectedCategory(updatedCategories);
+
+        if (updatedCategories.length === 0) {
+            // If no categories selected, show all products
             setFilteredProductList(productList);
         } else {
-            const result = productList.filter((curData) => {
-                return curData.productName === catItem;
-            })
-            setFilteredProductList(result);
-            setSelectedCategory(catItem);
-            console.log(result, 'rrrrr')
+            // Filter products based on selected categories
+            const filteredProducts = productList.filter(product =>
+                updatedCategories.includes(product.productName)
+            );
+            setFilteredProductList(filteredProducts);
         }
-        // setProductList(result)
     }
 
 
@@ -60,40 +70,71 @@ const ProductList = () => {
                         <ul className='categories-list'>
                             <li>
                                 <label className='common-customCheckbox vertical-filters-label'>
-                                    <input type="checkbox" className='me-1' name='saree'
+                                    <input type="checkbox"
+                                        className='me-1'
+                                        name='saree'
                                         onChange={() => filterData('Saree')}
-                                        checked={selectedCategory === 'Saree'}
+                                        checked={selectedCategory.includes('Saree')}
                                     />Saree
                                 </label>
                             </li>
                             <li>
                                 <label className='common-customCheckbox vertical-filters-label'>
-                                    <input type="checkbox" className='me-1' onChange={() => filterData('Shirt')} checked={selectedCategory === 'Shirt'} />Shirt
+                                    <input type="checkbox"
+                                        className='me-1'
+                                        name='shirt'
+                                        onChange={() => filterData('Shirt')}
+                                        checked={selectedCategory.includes('Shirt')}
+                                    />Shirt
                                 </label>
                             </li>
                             <li>
                                 <label className='common-customCheckbox vertical-filters-label'>
-                                    <input type="checkbox" className='me-1' name='floral dress' onChange={() => filterData('floral dress')} checked={selectedCategory === 'floral dress'} />floral dress
+                                    <input type="checkbox"
+                                        className='me-1'
+                                        name='floral dress'
+                                        onChange={() => filterData('floral dress')}
+                                        checked={selectedCategory.includes('floral dress')} />floral dress
                                 </label>
                             </li>
                             <li>
                                 <label className='common-customCheckbox vertical-filters-label'>
-                                    <input type="checkbox" className='me-1' onChange={() => filterData('Ethinic Dress')} />Ethinic Dress
+                                    <input type="checkbox"
+                                        className='me-1'
+                                        name='ethinic dress'
+                                        onChange={() => filterData('Ethinic Dress')}
+                                        checked={selectedCategory.includes('Ethinic Dress')}
+                                    />Ethinic Dress
                                 </label>
                             </li>
                             <li>
                                 <label className='common-customCheckbox vertical-filters-label'>
-                                    <input type="checkbox" className='me-1' onChange={() => filterData('Kurta set')} />Kurta set
+                                    <input type="checkbox"
+                                        className='me-1'
+                                        name='kurta set'
+                                        onChange={() => filterData('Kurta set')}
+                                        checked={selectedCategory.includes('Kurta set')}
+                                    />Kurta set
                                 </label>
                             </li>
                             <li>
                                 <label className='common-customCheckbox vertical-filters-label'>
-                                    <input type="checkbox" className='me-1' onChange={() => filterData('Earring')} />Earring
+                                    <input type="checkbox"
+                                        className='me-1'
+                                        name='earring'
+                                        onChange={() => filterData('Earring')}
+                                        checked={selectedCategory.includes('Earring')}
+                                    />Earring
                                 </label>
                             </li>
                             <li>
                                 <label className='common-customCheckbox vertical-filters-label'>
-                                    <input type="checkbox" className='me-1' onChange={() => filterData('Lehenga coli')} />Lehenga coli
+                                    <input type="checkbox"
+                                        className='me-1'
+                                        name='lehenga coli'
+                                        onChange={() => filterData('Lehenga coli')}
+                                        checked={selectedCategory.includes('Lehenga coli')}
+                                    />Lehenga coli
                                 </label>
                             </li>
                         </ul>
