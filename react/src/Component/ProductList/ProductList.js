@@ -4,6 +4,7 @@ import './ProductList.css'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Trash } from 'lucide-react';
 
 const ProductList = () => {
 
@@ -25,9 +26,25 @@ const ProductList = () => {
         })
     }
 
+    const deleteProductCard = (productId) => {
+        axios.delete(`http://localhost:8080/api/product/delete/${productId}`).then(response => {
+            if (response.status === 201) {
+                const updatedProducts = productList.filter(product => product._id !== productId);
+                setProductList(updatedProducts);
+                console.log(updatedProducts, 'updated');
+            }
+            else {
+                console.log('error')
+            }
+        })
+            .catch(error => {
+                console.log('Error deleting product:', error);
+            });
+    }
+
     useEffect(() => {
-        getAllProduct()
-    }, [])
+        getAllProduct(); // Fetch products initially
+    }, [productList]); // Re-run effect when productList changes
 
     const filterData = (catItem) => {
 
@@ -211,7 +228,7 @@ const ProductList = () => {
                         {
                             filteredProductList?.length > 0 &&
                             filteredProductList?.map((item) =>
-                                <div className='me-3'>
+                                <div className='me-3 position-relative'>
                                     <Card className='me-0 w-100 h-100 p-2'>
                                         <>
                                             <Card.Img variant="top" src={item.image} />
@@ -224,6 +241,7 @@ const ProductList = () => {
                                         </>
                                         <Button variant="primary" className='text-center' onClick={() => { handleSelect(item._id) }}>Buy</Button>
                                     </Card>
+                                    <span className='common-chip'><Trash width={16} height={16} onClick={() => { deleteProductCard(item._id) }} /></span>
                                 </div>
                             )}
                     </div>
