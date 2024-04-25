@@ -239,7 +239,8 @@ const ProductList = () => {
                                                 <Card.Text>{item?.price}</Card.Text>
                                             </Card.Body>
                                         </>
-                                        <Button variant="primary" className='text-center' onClick={() => { handleSelect(item._id) }}>Buy</Button>
+                                        <Button className='mb-2'>Edit</Button>
+                                        <Button variant="primary" className='text-center' onClick={() => { handleSelect(item._id) }}>View Detail</Button>
                                     </Card>
                                     <span className='common-chip'><Trash width={16} height={16} onClick={() => { deleteProductCard(item._id) }} /></span>
                                 </div>
