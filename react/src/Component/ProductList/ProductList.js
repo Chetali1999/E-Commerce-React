@@ -77,6 +77,10 @@ const ProductList = () => {
         navigate('/ProductDetails', { state: { type: 'ProductDetails', data: product } })
     }
 
+    const handleEditSelect = (product) => {
+        navigate('/CreateProduct', { state: { type: 'updateProduct', data: product } })
+    }
+
     return (
 
         <>
@@ -239,7 +243,7 @@ const ProductList = () => {
                                                 <Card.Text>{item?.price}</Card.Text>
                                             </Card.Body>
                                         </>
-                                        <Button className='mb-2'>Edit</Button>
+                                        <Button className='mb-2' onClick={() => {handleEditSelect(item)}}>Edit</Button>
                                         <Button variant="primary" className='text-center' onClick={() => { handleSelect(item._id) }}>View Detail</Button>
                                     </Card>
                                     <span className='common-chip'><Trash width={16} height={16} onClick={() => { deleteProductCard(item._id) }} /></span>

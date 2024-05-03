@@ -77,7 +77,7 @@ exports.deleteProduct = async (req, res) => {
 exports.updateProduct = async (req, res) => {
 
     const {
-        user_id,
+        id,
         productName,
         brand,
         quantity,
@@ -85,7 +85,7 @@ exports.updateProduct = async (req, res) => {
         image
     } = req.body;
 
-    const product = await Product.findByIdAndUpdate({ _id: user_id },
+    const product = await Product.findByIdAndUpdate({ _id: id },
         {
             $set: {
                 productName: productName,
@@ -100,6 +100,6 @@ exports.updateProduct = async (req, res) => {
         return res.status(500).json({ message: 'Product not found' })
     }
 
-    res.status(201).json({ message: 'Product details updated successfully' , data:product})
+    res.status(201).json({ message: 'Product details updated successfully', data: product })
 
 }
